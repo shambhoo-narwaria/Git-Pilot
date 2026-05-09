@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import chalk from 'chalk';
+import inquirer from 'inquirer';
 import { ship } from './commands/ship.js';
 import { push } from './commands/push.js';
 import { branch } from './commands/branch.js';
@@ -96,14 +97,33 @@ program
     const status = await git.getStatus();
 
     if (!status.hasChanges) {
-      logger.blank();
       if (status.ahead > 0) {
-        logger.info('(use "aigit push" to publish)');
+        logger.blank();
+        const { action } = await inquirer.prompt([
+          {
+            type: 'select',
+            name: 'action',
+            message: chalk.cyan(`You have ${status.ahead} local commit(s) ready to push. What would you like to do?`),
+            prefix: chalk.blue('?'),
+            choices: [
+              { name: 'Run `aigit push` now', value: 'push' },
+              { name: 'Exit', value: 'exit' }
+            ]
+          }
+        ]);
+        process.stdout.write('\x1b[1A\x1b[2K');
+        if (action === 'push') {
+          await push();
+          return;
+        } else {
+          process.exit(0);
+        }
       } else {
+        logger.blank();
         logger.info('Working tree clean — nothing to show.');
+        logger.blank();
+        return;
       }
-      logger.blank();
-      return;
     }
 
     let firstSection = true;
@@ -126,8 +146,25 @@ program
     printSection('Untracked', status.untracked, logger.fileUntracked.bind(logger));
     logger.blank();
 
-    logger.info('(use "aigit ship" to stage and commit)');
     logger.blank();
+    const { action } = await inquirer.prompt([
+      {
+        type: 'select',
+        name: 'action',
+        message: chalk.cyan('You have uncommitted changes. What would you like to do?'),
+        prefix: chalk.blue('?'),
+        choices: [
+          { name: 'Run `aigit ship` now', value: 'ship' },
+          { name: 'Exit', value: 'exit' }
+        ]
+      }
+    ]);
+    process.stdout.write('\x1b[1A\x1b[2K');
+    if (action === 'ship') {
+      await ship({});
+      return;
+    }
+    process.exit(0);
   });
 
 // ─── Pass-through to Git ─────────────────────────────────────────

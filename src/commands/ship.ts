@@ -75,14 +75,36 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
     spinner.stop();
 
     if (!status.hasChanges) {
-      logger.blank();
       if (status.ahead > 0) {
-        logger.info('(use "aigit push" to publish)');
+        logger.blank();
+        const { action } = await inquirer.prompt([
+          {
+            type: 'select',
+            name: 'action',
+            message: chalk.cyan(`You have ${status.ahead} local commit(s) ready to push. What would you like to do?`),
+            prefix: chalk.blue('?'),
+            choices: [
+              { name: 'Run `aigit push` now', value: 'push' },
+              { name: 'Exit', value: 'exit' }
+            ]
+          }
+        ]);
+        
+        process.stdout.write('\x1b[1A\x1b[2K'); // Clear prompt line
+        
+        if (action === 'push') {
+          const { push } = await import('./push.js');
+          await push();
+          return;
+        } else {
+          process.exit(0);
+        }
       } else {
+        logger.blank();
         logger.warn('Nothing to ship — working tree is clean.');
+        logger.blank();
+        process.exit(0);
       }
-      logger.blank();
-      process.exit(0);
     }
 
     renderStatus(status);
