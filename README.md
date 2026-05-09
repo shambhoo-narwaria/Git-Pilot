@@ -30,27 +30,27 @@ git switch main      # "Let me go back"
 ## The Solution
 
 ```bash
-aigit ship
-aigit push
-aigit branch
+aigitt ship
+aigitt push
+aigitt branch
 ```
 
 Three simple commands for your daily workflow. 
-**For everything else? `aigit` works exactly like `git`.** You can completely alias `git` to `aigit` and never look back!
+**For everything else? `aigitt` works exactly like `git`.** You can completely alias `git` to `aigitt` and never look back!
 
 ---
 
 ## Installation
 
 ```bash
-npm install -g aigit
+npm install -g aigitt
 ```
 
 ---
 
 ## Commands
 
-### `aigit ship`
+### `aigitt ship`
 
 The flagship command. Runs the full Git workflow **100% Vim-Free**:
 
@@ -62,7 +62,7 @@ The flagship command. Runs the full Git workflow **100% Vim-Free**:
 ✔ Commit changes locally
 ✔ Changes committed!
 ```
-*(By using a clean, interactive terminal prompt for your commit message, `aigit ship` completely bypasses the dreaded Vim editor. Plus, once your commit is done, it instantly offers to run `aigit push` for you!)*
+*(By using a clean, interactive terminal prompt for your commit message, `aigitt ship` completely bypasses the dreaded Vim editor. Plus, once your commit is done, it instantly offers to run `aigitt push` for you!)*
 
 **Options:**
 
@@ -74,15 +74,15 @@ The flagship command. Runs the full Git workflow **100% Vim-Free**:
 
 ```bash
 # Interactive mode
-aigit ship
+aigitt ship
 
 # With inline commit message
-aigit ship -m "feat(auth): add login validation"
+aigitt ship -m "feat(auth): add login validation"
 ```
 
 ---
 
-### `aigit push`
+### `aigitt push`
 
 Push your committed changes to GitHub/remote automatically.
 
@@ -96,13 +96,13 @@ Push your committed changes to GitHub/remote automatically.
 **Examples:**
 
 ```bash
-aigit push
+aigitt push
 ```
 
 ---
 
 
-### `aigit branch`
+### `aigitt branch`
 
 A single command to handle everything related to branches.
 
@@ -113,20 +113,20 @@ A single command to handle everything related to branches.
 
 ```bash
 # Interactive selection menu
-aigit branch
+aigitt branch
 
 # Create and switch immediately
-aigit branch new-feature
+aigitt branch new-feature
 ```
 
 ---
 
-### `aigit status`
+### `aigitt status`
 
 Clean, readable working-tree status with **intelligent next-step routing**:
 
 ```bash
-aigit status
+aigitt status
 ```
 
 Output:
@@ -138,10 +138,10 @@ Untracked:
   ? notes.txt
 
 ? You have uncommitted changes. What would you like to do?
-❯ Run `aigit ship` now
+❯ Run `aigitt ship` now
   Exit
 ```
-*(If your workspace has changes, it instantly offers to run `aigit ship`. If your workspace is clean but you have local commits, it offers to run `aigit push`. GitPilot guides you to the next logical step automatically!)*
+*(If your workspace has changes, it instantly offers to run `aigitt ship`. If your workspace is clean but you have local commits, it offers to run `aigitt push`. GitPilot guides you to the next logical step automatically!)*
 
 ---
 
@@ -156,7 +156,7 @@ git commit -m "feat: add login"
 ```
 **After (1 simple command):**
 ```bash
-aigit ship
+aigitt ship
 ```
 
 ### 2. Pushing Code
@@ -168,7 +168,7 @@ git push --set-upstream origin feature
 ```
 **After (1 smart command):**
 ```bash
-aigit push
+aigitt push
 ```
 *(Auto-detects branch, auto-sets upstream, stops if up-to-date!)*
 
@@ -181,14 +181,14 @@ git switch main      # switch existing
 ```
 **After (1 interactive command):**
 ```bash
-$ aigit branch
+$ aigitt branch
 
 ? Select a branch to switch to:
   main
 ❯ feature/login
   hotfix/typo
 ```
-*(Use your arrow keys to quickly switch branches, or use `aigit branch <name>` to instantly create and switch to a new one. Plus, it blocks switches when your worktree is messy!)*
+*(Use your arrow keys to quickly switch branches, or use `aigitt branch <name>` to instantly create and switch to a new one. Plus, it blocks switches when your worktree is messy!)*
 
 ### 4. Everything Else
 **Before (Switching between custom CLI and Git):**
@@ -198,8 +198,8 @@ git rebase main
 ```
 **After (100% Git Compatible):**
 ```bash
-aigit log --oneline
-aigit rebase main
+aigitt log --oneline
+aigitt rebase main
 ```
 *(GitPilot seamlessly passes any unknown commands directly to standard Git. You can use it as a complete 1:1 drop-in replacement!)*
 
@@ -218,10 +218,10 @@ Looking for more details? Check out the [`docs/`](./docs/index.md) folder:
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| **Phase 1** | Complete | `aigit ship` — full workflow automation |
+| **Phase 1** | Complete | `aigitt ship` — full workflow automation |
 | **Phase 2** | Planned | Smart commit types, selective staging, pre-push checks |
 | **Phase 3** | Planned | Local AI commit messages via Ollama |
-| **Phase 4** | Planned | Git hooks, team config, `.aigitignore` |
+| **Phase 4** | Planned | Git hooks, team config, `.aigittignore` |
 | **Phase 5** | Planned | VSCode extension, GitHub integration |
 
 ---
@@ -249,7 +249,7 @@ npm run build
 
 # Link locally for testing
 npm link
-aigit --help
+aigitt --help
 ```
 
 ---

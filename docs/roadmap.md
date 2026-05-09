@@ -54,8 +54,8 @@ Introduce AI for commit message generation and code review. Uses Ollama so every
 Make GitPilot useful for teams, not just individuals.
 
 - Git Hook Integration (husky)
-- Config File (`.aigit.json`)
-- Ignore Rules (`.aigitignore`)
+- Config File (`.aigitt.json`)
+- Ignore Rules (`.aigittignore`)
 
 ---
 

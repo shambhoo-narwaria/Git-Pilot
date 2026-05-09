@@ -1,4 +1,4 @@
-# aigit ship
+# aigitt ship
 
 Stage all working-tree changes and commit them locally.
 
@@ -7,14 +7,14 @@ Stage all working-tree changes and commit them locally.
 ## Usage
 
 ```bash
-aigit ship [options]
+aigitt ship [options]
 ```
 
 ---
 
 ## What It Does
 
-When you run `aigit ship`, it executes the following steps in order:
+When you run `aigitt ship`, it executes the following steps in order:
 
 | Step | Action | Git Equivalent |
 |------|--------|----------------|
@@ -24,7 +24,7 @@ When you run `aigit ship`, it executes the following steps in order:
 | 4 | Prompt for a commit message | — |
 | 5 | Commit staged changes | `git commit -m "message"` |
 
-The command stops after the commit. It does **not** push. Use [`aigit push`](./push.md) to push after committing.
+The command stops after the commit. It does **not** push. Use [`aigitt push`](./push.md) to push after committing.
 
 ---
 
@@ -42,7 +42,7 @@ The command stops after the commit. It does **not** push. Use [`aigit push`](./p
 ### Interactive mode (recommended)
 
 ```bash
-aigit ship
+aigitt ship
 ```
 
 You will see your changed files, then be prompted to enter a commit message:
@@ -74,7 +74,7 @@ Added:
 ### Inline commit message
 
 ```bash
-aigit ship -m "fix: correct typo in README"
+aigitt ship -m "fix: correct typo in README"
 ```
 
 Skips the prompt entirely. Useful for scripting or when you already know the message.
@@ -83,7 +83,7 @@ Skips the prompt entirely. Useful for scripting or when you already know the mes
 
 ## File Change Display
 
-After reading the working tree, `aigit ship` groups changed files by type:
+After reading the working tree, `aigitt ship` groups changed files by type:
 
 | Symbol | Color | Meaning |
 |--------|-------|---------|

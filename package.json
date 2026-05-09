@@ -1,11 +1,16 @@
 {
-  "name": "aigit",
+  "name": "aigitt",
   "version": "1.0.0",
   "description": "AI-powered Git workflow automation — ship your code in one command",
   "main": "dist/index.js",
   "bin": {
-    "aigit": "./dist/index.js"
+    "aigitt": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup",
     "postbuild": "node -e \"const fs=require('fs');const f='dist/index.js';const c=fs.readFileSync(f,'utf8');if(!c.startsWith('#!/usr/bin/env node')){fs.writeFileSync(f,'#!/usr/bin/env node\\n'+c);}\"",

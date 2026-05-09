@@ -24,13 +24,13 @@ Welcome to the GitPilot documentation. GitPilot is a local Git workflow automati
 
 ```bash
 # 1. See what changed
-aigit status
+aigitt status
 
 # 2. Stage and commit
-aigit ship
+aigitt ship
 
 # 3. Push to remote
-aigit push
+aigitt push
 ```
 
 ---

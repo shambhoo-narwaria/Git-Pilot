@@ -18,9 +18,9 @@ const brand =
 
 // ─── Program meta ────────────────────────────────────────────────
 program
-  .name('aigit')
+  .name('aigitt')
   .version(APP_VERSION, '-v, --version', 'Output the current version')
-  .description(brand + chalk.italic('\n  Note: Any unknown command is passed directly to git.\n  You can use aigit as a 100% drop-in replacement!\n'))
+  .description(brand + chalk.italic('\n  Note: Any unknown command is passed directly to git.\n  You can use aigitt as a 100% drop-in replacement!\n'))
   .addHelpText('beforeAll', brand);
 
 // ─── ship command ────────────────────────────────────────────────
@@ -106,7 +106,7 @@ program
             message: chalk.cyan(`You have ${status.ahead} local commit(s) ready to push. What would you like to do?`),
             prefix: chalk.blue('?'),
             choices: [
-              { name: 'Run `aigit push` now', value: 'push' },
+              { name: 'Run `aigitt push` now', value: 'push' },
               { name: 'Exit', value: 'exit' }
             ]
           }
@@ -154,7 +154,7 @@ program
         message: chalk.cyan('You have uncommitted changes. What would you like to do?'),
         prefix: chalk.blue('?'),
         choices: [
-          { name: 'Run `aigit ship` now', value: 'ship' },
+          { name: 'Run `aigitt ship` now', value: 'ship' },
           { name: 'Exit', value: 'exit' }
         ]
       }

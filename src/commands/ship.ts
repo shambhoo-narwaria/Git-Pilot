@@ -84,7 +84,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
             message: chalk.cyan(`You have ${status.ahead} local commit(s) ready to push. What would you like to do?`),
             prefix: chalk.blue('?'),
             choices: [
-              { name: 'Run `aigit push` now', value: 'push' },
+              { name: 'Run `aigitt push` now', value: 'push' },
               { name: 'Exit', value: 'exit' }
             ]
           }
@@ -163,7 +163,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
         message: chalk.cyan(`You have ${newStatus.ahead} local commit(s) ready to push. What would you like to do?`),
         prefix: chalk.blue('?'),
         choices: [
-          { name: 'Run `aigit push` now', value: 'push' },
+          { name: 'Run `aigitt push` now', value: 'push' },
           { name: 'Exit', value: 'exit' }
         ]
       }

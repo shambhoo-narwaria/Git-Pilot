@@ -1,4 +1,4 @@
-# aigit push
+# aigitt push
 
 Push committed changes from your local branch to the remote repository.
 
@@ -7,14 +7,14 @@ Push committed changes from your local branch to the remote repository.
 ## Usage
 
 ```bash
-aigit push
+aigitt push
 ```
 
 ---
 
 ## What It Does
 
-When you run `aigit push`, it executes the following steps in order:
+When you run `aigitt push`, it executes the following steps in order:
 
 | Step | Action | Git Equivalent |
 |------|--------|----------------|
@@ -56,7 +56,7 @@ The URL is validated before the remote is added. Blank or malformed values are r
 ### Standard push
 
 ```bash
-aigit push
+aigitt push
 ```
 
 Sample output when the branch already has an upstream:
@@ -105,7 +105,7 @@ You never need to type `--set-upstream` manually.
 |-----------|-----------|
 | Not inside a Git repo | Prints error and exits with code 1 |
 | Everything up-to-date | Prints `⚠ Everything up-to-date. Nothing to push.` and exits cleanly |
-| Has uncommitted changes | Prints warning to use `aigit ship` and exits cleanly |
+| Has uncommitted changes | Prints warning to use `aigitt ship` and exits cleanly |
 | No commits to push | Git will report the error; GitPilot surfaces it and exits with code 1 |
 | Push rejected (e.g. remote has newer commits) | Prints the Git error message and exits with code 1 |
 | User cancels at the confirmation prompt | Exits cleanly with code 0 |

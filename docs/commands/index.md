@@ -8,10 +8,10 @@ GitPilot exposes four core commands, each responsible for one stage of the Git w
 
 | Command | Description |
 |---------|-------------|
-| [`aigit ship`](./ship.md) | Stage all changes and commit locally |
-| [`aigit push`](./push.md) | Push committed changes to the remote repository |
-| [`aigit branch`](./branch.md) | Switch or create branches interactively |
-| [`aigit status`](./status.md) | Show working-tree status in a clean format |
+| [`aigitt ship`](./ship.md) | Stage all changes and commit locally |
+| [`aigitt push`](./push.md) | Push committed changes to the remote repository |
+| [`aigitt branch`](./branch.md) | Switch or create branches interactively |
+| [`aigitt status`](./status.md) | Show working-tree status in a clean format |
 
 ---
 
@@ -20,9 +20,9 @@ GitPilot exposes four core commands, each responsible for one stage of the Git w
 These commands map directly to the developer loop:
 
 ```
-aigit status   ->   see what changed
-aigit ship     ->   stage + commit
-aigit push     ->   push to remote
+aigitt status   ->   see what changed
+aigitt ship     ->   stage + commit
+aigitt push     ->   push to remote
 ```
 
 Each command is intentionally focused on one job. This makes the tool predictable and easy to compose.

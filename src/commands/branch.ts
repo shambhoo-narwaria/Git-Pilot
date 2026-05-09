@@ -18,7 +18,7 @@ export async function branch(branchName?: string): Promise<void> {
 
   const status = await git.getStatus();
   if (status.hasChanges) {
-    logger.warn('You have uncommitted changes. (use "aigit ship" to stage and commit before switching)');
+    logger.warn('You have uncommitted changes. (use "aigitt ship" to stage and commit before switching)');
     logger.blank();
     process.exit(0);
   }
@@ -45,7 +45,7 @@ export async function branch(branchName?: string): Promise<void> {
   if (branches.all.length <= 1) {
     logger.blank();
     logger.warn(`You only have one branch: ${chalk.bold(branches.current)}`);
-    logger.info('(use "aigit branch <name>" to create a new one)');
+    logger.info('(use "aigitt branch <name>" to create a new one)');
     logger.blank();
     return;
   }

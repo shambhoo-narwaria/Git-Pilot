@@ -128,7 +128,7 @@ export async function push(): Promise<void> {
   const status = await git.getStatus();
   if (branch.hasUpstream && status.ahead === 0) {
     if (status.hasChanges) {
-      logger.warn('You have uncommitted changes. (use "aigit ship" to stage and commit)');
+      logger.warn('You have uncommitted changes. (use "aigitt ship" to stage and commit)');
     } else {
       logger.warn('Everything up-to-date. Nothing to push.');
     }
