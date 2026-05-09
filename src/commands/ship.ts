@@ -74,8 +74,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
 
     if (!status.hasChanges) {
       if (status.ahead > 0) {
-        logger.warn('Working tree is clean.');
-        logger.dim('  (use "aigit push" to publish)');
+        logger.info('(use "aigit push" to publish)');
       } else {
         logger.warn('Nothing to ship — working tree is clean.');
       }
