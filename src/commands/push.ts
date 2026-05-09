@@ -90,6 +90,7 @@ export async function push(): Promise<void> {
       logger.blank();
 
       const url = await promptRemoteUrl();
+      process.stdout.write('\x1b[1A\x1b[2K');
 
       const addSpinner = ora({ text: `Adding remote "${DEFAULT_REMOTE}"…`, color: 'cyan' }).start();
       try {
@@ -136,6 +137,7 @@ export async function push(): Promise<void> {
 
   // ── Step 4: Confirm ───────────────────────────
   const confirmed = await promptConfirmPush(branch);
+  process.stdout.write('\x1b[1A\x1b[2K');
   if (!confirmed) {
     logger.warn('Push cancelled.');
     process.exit(0);

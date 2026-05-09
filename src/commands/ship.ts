@@ -104,6 +104,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
     logger.info(`Using commit message: ${chalk.italic(commitMessage)}`);
   } else {
     commitMessage = await promptCommitMessage();
+    process.stdout.write('\x1b[1A\x1b[2K');
   }
 
   // ── Step 5: Commit ───────────────────────────
