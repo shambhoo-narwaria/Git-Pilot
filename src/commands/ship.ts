@@ -55,12 +55,10 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
 
   // ── Step 1: Validate git repo ────────────────
   {
-    const spinner = ora({ text: 'Checking Git repository…', color: 'magenta' }).start();
     try {
       await git.assertIsRepo();
-      spinner.succeed(chalk.green('Git repository detected'));
     } catch {
-      spinner.fail(chalk.red('Not inside a Git repository'));
+      logger.error('Not inside a Git repository');
       process.exit(1);
     }
   }
