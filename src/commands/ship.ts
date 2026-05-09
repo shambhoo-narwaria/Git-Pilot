@@ -152,5 +152,32 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
   // ── Done ─────────────────────────────────────
   logger.blank();
   console.log(chalk.bold.hex('#A78BFA')('Changes committed locally!'));
-  logger.blank();
+  
+  const newStatus = await git.getStatus();
+  if (newStatus.ahead > 0) {
+    logger.blank();
+    const { action } = await inquirer.prompt([
+      {
+        type: 'select',
+        name: 'action',
+        message: chalk.cyan(`You have ${newStatus.ahead} local commit(s) ready to push. What would you like to do?`),
+        prefix: chalk.blue('?'),
+        choices: [
+          { name: 'Run `aigit push` now', value: 'push' },
+          { name: 'Exit', value: 'exit' }
+        ]
+      }
+    ]);
+    
+    process.stdout.write('\x1b[1A\x1b[2K'); // Clear prompt line
+    
+    if (action === 'push') {
+      const { push } = await import('./push.js');
+      await push();
+    } else {
+      logger.blank();
+    }
+  } else {
+    logger.blank();
+  }
 }
