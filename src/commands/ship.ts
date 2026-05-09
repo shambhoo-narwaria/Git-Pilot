@@ -18,9 +18,12 @@ function renderStatus(status: GitStatus): void {
     { label: 'Untracked', files: status.untracked, render: logger.fileUntracked.bind(logger)},
   ];
 
+  let firstSection = true;
   sections
     .filter((s) => s.files.length > 0)
     .forEach((s) => {
+      if (!firstSection) logger.blank();
+      firstSection = false;
       logger.section(chalk.bold(s.label + ':'));
       s.files.forEach((f) => s.render(f));
     });
@@ -72,6 +75,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
     spinner.stop();
 
     if (!status.hasChanges) {
+      logger.blank();
       if (status.ahead > 0) {
         logger.info('(use "aigit push" to publish)');
       } else {

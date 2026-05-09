@@ -147,5 +147,38 @@ export class GitService {
   async addRemote(name: string, url: string): Promise<void> {
     await this.git.addRemote(name, url);
   }
+
+  /**
+   * Pull from origin (fast-forward only if possible, to avoid messy merges).
+   */
+  async pull(): Promise<void> {
+    try {
+      await this.git.pull(DEFAULT_REMOTE, undefined, ['--ff-only']);
+    } catch (err: any) {
+      throw new Error(err?.message ?? 'Pull failed. You might have merge conflicts.');
+    }
+  }
+
+  /**
+   * Get a list of all local branches.
+   */
+  async getLocalBranches(): Promise<{ all: string[]; current: string }> {
+    const summary = await this.git.branchLocal();
+    return { all: summary.all, current: summary.current };
+  }
+
+  /**
+   * Checkout an existing branch.
+   */
+  async checkout(branchName: string): Promise<void> {
+    await this.git.checkout(branchName);
+  }
+
+  /**
+   * Create and checkout a new branch.
+   */
+  async createBranch(branchName: string): Promise<void> {
+    await this.git.checkoutLocalBranch(branchName);
+  }
 }
 

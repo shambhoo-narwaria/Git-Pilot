@@ -21,6 +21,8 @@ git push origin feature/login --set-upstream
 ```bash
 aigit ship
 aigit push
+aigit pull
+aigit branch
 ```
 
 Two simple commands. Full workflow. Done.
@@ -87,6 +89,37 @@ aigit push
 
 ---
 
+### `aigit pull`
+
+Safely pull the latest changes from the remote repository. It checks for uncommitted changes to prevent messy merge conflicts and attempts a fast-forward pull by default.
+
+**Examples:**
+
+```bash
+aigit pull
+```
+
+---
+
+### `aigit branch`
+
+A single command to handle everything related to branches.
+
+- **Interactive Switch:** Run without arguments to see a clean list of local branches. Use your arrow keys to select and switch.
+- **Instant Create:** Pass a name to instantly create and switch to a new branch.
+
+**Examples:**
+
+```bash
+# Interactive selection menu
+aigit branch
+
+# Create and switch immediately
+aigit branch new-feature
+```
+
+---
+
 ### `aigit status`
 
 Clean, readable working-tree status:
@@ -129,6 +162,8 @@ git commit -m "feat: add login"
 ```bash
 aigit ship
 aigit push
+aigit pull
+aigit branch
 ```
 
 2 simple, guided commands. No more `--set-upstream` errors or manually setting remotes.

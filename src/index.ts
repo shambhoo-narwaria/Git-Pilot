@@ -3,6 +3,8 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import { ship } from './commands/ship.js';
 import { push } from './commands/push.js';
+import { pull } from './commands/pull.js';
+import { branch } from './commands/branch.js';
 import { APP_VERSION } from './constants/index.js';
 
 const program = new Command();
@@ -48,6 +50,32 @@ program
     }
   });
 
+// ─── pull command ────────────────────────────────────────────────
+program
+  .command('pull')
+  .description('Safely pull the latest changes from the remote repository')
+  .action(async () => {
+    try {
+      await pull();
+    } catch (err: any) {
+      console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
+      process.exit(1);
+    }
+  });
+
+// ─── branch command ──────────────────────────────────────────────
+program
+  .command('branch [name]')
+  .description('Interactive branch switching, or create a new branch')
+  .action(async (name) => {
+    try {
+      await branch(name);
+    } catch (err: any) {
+      console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
+      process.exit(1);
+    }
+  });
+
 // ─── status command (quick alias) ────────────────────────────────
 program
   .command('status')
@@ -70,6 +98,7 @@ program
     const status = await git.getStatus();
 
     if (!status.hasChanges) {
+      logger.blank();
       if (status.ahead > 0) {
         logger.info('(use "aigit push" to publish)');
       } else {
@@ -79,17 +108,19 @@ program
       return;
     }
 
+    let firstSection = true;
     const printSection = (
       label: string,
       files: string[],
       fn: (f: string) => void
     ) => {
       if (!files.length) return;
+      if (!firstSection) logger.blank();
+      firstSection = false;
       logger.section(chalk.bold(label + ':'));
       files.forEach(fn);
     };
 
-    logger.blank();
     printSection('Modified', status.modified, logger.fileModified.bind(logger));
     printSection('Added', status.added, logger.fileAdded.bind(logger));
     printSection('Deleted', status.deleted, logger.fileDeleted.bind(logger));

@@ -16,11 +16,9 @@ export const logger = {
       chalk.bold.hex('#A78BFA')('  ⚡ ' + title)
     );
     console.log(line);
-    console.log('');
   },
 
   section: (title: string) => {
-    console.log('');
     console.log(chalk.bold.hex('#6D28D9')(title));
   },
 
