@@ -3,6 +3,10 @@
 > **"Cursor for Git workflows."**  
 > A local AI-powered Git automation assistant for developers.
 
+[![npm version](https://img.shields.io/npm/v/aigitt.svg)](https://www.npmjs.com/package/aigitt)
+[![license](https://img.shields.io/npm/l/aigitt.svg)](https://www.npmjs.com/package/aigitt)
+
+
 ---
 
 ## The Problem
