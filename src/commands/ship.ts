@@ -114,6 +114,6 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
 
   // ── Done ─────────────────────────────────────
   logger.blank();
-  console.log(chalk.bold.hex('#A78BFA')('  ✔ Changes committed locally!'));
+  console.log(chalk.bold.hex('#A78BFA')('Changes committed locally!'));
   logger.blank();
 }
