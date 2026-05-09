@@ -73,7 +73,12 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
     spinner.stop();
 
     if (!status.hasChanges) {
-      logger.warn('Nothing to ship — working tree is clean.');
+      if (status.ahead > 0) {
+        logger.warn('Working tree is clean.');
+        logger.dim('  (use "aigit push" to publish)');
+      } else {
+        logger.warn('Nothing to ship — working tree is clean.');
+      }
       process.exit(0);
     }
 

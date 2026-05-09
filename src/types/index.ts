@@ -5,6 +5,7 @@ export interface GitStatus {
   renamed: string[];
   untracked: string[];
   hasChanges: boolean;
+  ahead: number;
 }
 
 export interface BranchInfo {

@@ -68,7 +68,11 @@ program
     const status = await git.getStatus();
 
     if (!status.hasChanges) {
-      logger.info('Working tree clean — nothing to show.');
+      if (status.ahead > 0) {
+        logger.info('(use "aigit push" to publish)');
+      } else {
+        logger.info('Working tree clean — nothing to show.');
+      }
       return;
     }
 
@@ -88,6 +92,9 @@ program
     printSection('Deleted', status.deleted, logger.fileDeleted.bind(logger));
     printSection('Renamed', status.renamed, logger.fileRenamed.bind(logger));
     printSection('Untracked', status.untracked, logger.fileUntracked.bind(logger));
+    logger.blank();
+
+    logger.info('(use "aigit ship" to stage and commit)');
     logger.blank();
   });
 

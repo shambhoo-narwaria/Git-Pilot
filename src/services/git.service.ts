@@ -60,6 +60,7 @@ export class GitService {
       renamed,
       untracked,
       hasChanges,
+      ahead: status.ahead || 0,
     };
   }
 
