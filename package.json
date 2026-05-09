@@ -1,6 +1,6 @@
 {
   "name": "aigitt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI-powered Git workflow automation — ship your code in one command",
   "main": "dist/index.js",
   "bin": {
@@ -17,7 +17,13 @@
     "dev": "ts-node --esm src/index.ts",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["git", "cli", "automation", "developer-tools", "gitpilot"],
+  "keywords": [
+    "git",
+    "cli",
+    "automation",
+    "developer-tools",
+    "gitpilot"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
