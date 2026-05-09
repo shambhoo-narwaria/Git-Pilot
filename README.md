@@ -123,7 +123,7 @@ aigit branch new-feature
 
 ### `aigit status`
 
-Clean, readable working-tree status:
+Clean, readable working-tree status with **intelligent next-step routing**:
 
 ```bash
 aigit status
@@ -134,15 +134,14 @@ Output:
 Modified:
   ~ src/auth.ts
 
-Added:
-  + src/user.ts
-
-Deleted:
-  - temp.js
-
 Untracked:
   ? notes.txt
+
+? You have uncommitted changes. What would you like to do?
+❯ Run `aigit ship` now
+  Exit
 ```
+*(If your workspace has changes, it instantly offers to run `aigit ship`. If your workspace is clean but you have local commits, it offers to run `aigit push`. GitPilot guides you to the next logical step automatically!)*
 
 ---
 
