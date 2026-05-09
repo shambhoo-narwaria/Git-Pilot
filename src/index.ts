@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+import { Command } from 'commander';
+import chalk from 'chalk';
+import { ship } from './commands/ship.js';
+import { APP_NAME, APP_VERSION } from './constants/index.js';
+
+const program = new Command();
+
+// ─── Branding ────────────────────────────────────────────────────
+const brand =
+  '\n' +
+  chalk.bold.hex('#7C3AED')('  ⚡ GitPilot') +
+  chalk.dim(' — AI-powered Git workflow automation') +
+  '\n';
+
+// ─── Program meta ────────────────────────────────────────────────
+program
+  .name('aigit')
+  .version(APP_VERSION, '-v, --version', 'Output the current version')
+  .description(brand)
+  .addHelpText('beforeAll', brand);
+
+// ─── ship command ────────────────────────────────────────────────
+program
+  .command('ship')
+  .description(
+    'Stage all changes, commit, and push — the full workflow in one command'
+  )
+  .option('-m, --message <msg>', 'Commit message (skip the prompt)')
+  .option('--dry-run', 'Stage and commit locally but skip the push')
+  .action(async (opts) => {
+    try {
+      await ship({
+        message: opts.message,
+        dryRun: opts.dryRun ?? false,
+      });
+    } catch (err: any) {
+      console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
+      process.exit(1);
+    }
+  });
+
+// ─── status command (quick alias) ────────────────────────────────
+program
+  .command('status')
+  .description('Show working-tree status in a clean, readable format')
+  .action(async () => {
+    const { GitService } = await import('./services/git.service.js');
+    const { logger } = await import('./utils/logger.js');
+
+    const git = new GitService();
+
+    try {
+      await git.assertIsRepo();
+    } catch {
+      logger.error('Not inside a Git repository');
+      process.exit(1);
+    }
+
+    const status = await git.getStatus();
+
+    if (!status.hasChanges) {
+      logger.info('Working tree clean — nothing to show.');
+      return;
+    }
+
+    const printSection = (
+      label: string,
+      files: string[],
+      fn: (f: string) => void
+    ) => {
+      if (!files.length) return;
+      logger.section(chalk.bold(label + ':'));
+      files.forEach(fn);
+    };
+
+    logger.blank();
+    printSection('Modified', status.modified, logger.fileModified.bind(logger));
+    printSection('Added', status.added, logger.fileAdded.bind(logger));
+    printSection('Deleted', status.deleted, logger.fileDeleted.bind(logger));
+    printSection('Renamed', status.renamed, logger.fileRenamed.bind(logger));
+    printSection('Untracked', status.untracked, logger.fileUntracked.bind(logger));
+    logger.blank();
+  });
+
+// ─── Parse ───────────────────────────────────────────────────────
+program.parse(process.argv);
