@@ -4,10 +4,37 @@ import chalk from 'chalk';
 import { GitService } from '../services/git.service.js';
 import { BranchInfo } from '../types/index.js';
 import { logger } from '../utils/logger.js';
+import { DEFAULT_REMOTE } from '../constants/index.js';
 
 // ─────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────
+
+/** Basic check that the input looks like a Git remote URL. */
+function isValidRemoteUrl(url: string): boolean {
+  return (
+    url.startsWith('https://') ||
+    url.startsWith('git@') ||
+    url.startsWith('http://')
+  );
+}
+
+async function promptRemoteUrl(): Promise<string> {
+  const { url } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'url',
+      message: chalk.cyan('Enter GitHub repo URL:'),
+      validate: (input: string) => {
+        if (!input.trim()) return 'URL cannot be empty';
+        if (!isValidRemoteUrl(input.trim()))
+          return 'Must be a valid Git URL (https://... or git@...)';
+        return true;
+      },
+    },
+  ]);
+  return (url as string).trim();
+}
 
 async function promptConfirmPush(branch: BranchInfo): Promise<boolean> {
   const target = branch.hasUpstream
@@ -51,7 +78,31 @@ export async function push(): Promise<void> {
     }
   }
 
-  // ── Step 2: Detect branch + upstream ─────────
+  // ── Step 2: Check remote exists ──────────────
+  {
+    const spinner = ora({ text: `Checking remote "${DEFAULT_REMOTE}"…`, color: 'cyan' }).start();
+    const remoteExists = await git.hasRemote(DEFAULT_REMOTE);
+
+    if (remoteExists) {
+      spinner.succeed(chalk.green(`Remote "${DEFAULT_REMOTE}" found`));
+    } else {
+      spinner.warn(chalk.yellow(`No remote "${DEFAULT_REMOTE}" found`));
+      logger.blank();
+
+      const url = await promptRemoteUrl();
+
+      const addSpinner = ora({ text: `Adding remote "${DEFAULT_REMOTE}"…`, color: 'cyan' }).start();
+      try {
+        await git.addRemote(DEFAULT_REMOTE, url);
+        addSpinner.succeed(chalk.green(`Remote "${DEFAULT_REMOTE}" added → ${url}`));
+      } catch (err: any) {
+        addSpinner.fail(chalk.red(err?.message ?? 'Failed to add remote'));
+        process.exit(1);
+      }
+    }
+  }
+
+  // ── Step 3: Detect branch + upstream ─────────
   let branch: BranchInfo;
   {
     const spinner = ora({ text: 'Detecting branch…', color: 'blue' }).start();
@@ -65,21 +116,19 @@ export async function push(): Promise<void> {
       );
     } else {
       spinner.succeed(
-        chalk.green(
-          `Branch: ${chalk.bold(branch.current)} -> ${branch.upstream}`
-        )
+        chalk.green(`Branch: ${chalk.bold(branch.current)} -> ${branch.upstream}`)
       );
     }
   }
 
-  // ── Step 3: Confirm ───────────────────────────
+  // ── Step 4: Confirm ───────────────────────────
   const confirmed = await promptConfirmPush(branch);
   if (!confirmed) {
     logger.warn('Push cancelled.');
     process.exit(0);
   }
 
-  // ── Step 4: Push ──────────────────────────────
+  // ── Step 5: Push ──────────────────────────────
   {
     const spinner = ora({ text: 'Pushing to remote…', color: 'magenta' }).start();
     try {

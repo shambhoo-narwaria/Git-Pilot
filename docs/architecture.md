@@ -68,86 +68,23 @@ Each layer has a single responsibility. Commands orchestrate. Services execute. 
 
 Registers all commands with Commander. Each command imports its handler from `src/commands/`. This file contains no business logic.
 
-```ts
-program
-  .command('ship')
-  .option('-m, --message <msg>', 'Commit message')
-  .action(async (opts) => {
-    await ship({ message: opts.message });
-  });
-```
-
 ---
 
 ### `src/commands/ship.ts` — Ship Command
 
-Responsible for:
-- Rendering the changed files summary
-- Prompting for a commit message
-- Calling `git.stageAll()` and `git.commit()`
-
-Not responsible for:
-- Any raw Git execution (delegated to `GitService`)
-- Pushing (that is `push.ts`)
+Responsible for rendering the changed files summary, prompting for a commit message, and calling `git.stageAll()` and `git.commit()`. Not responsible for any raw Git execution.
 
 ---
 
 ### `src/commands/push.ts` — Push Command
 
-Responsible for:
-- Detecting the current branch and upstream via `GitService`
-- Confirming the push with the user
-- Calling `git.push()`
-
-Handles the case where no upstream exists by automatically setting it via `--set-upstream origin <branch>`.
+Responsible for detecting the current branch and remote, confirming the push with the user, and calling `git.push()`. Handles missing remotes by prompting the user and running `git remote add`. Handles missing upstreams automatically.
 
 ---
 
 ### `src/services/git.service.ts` — Git Service
 
-The only file that communicates with `simple-git`. All Git operations are methods on this class:
-
-| Method | Description |
-|--------|-------------|
-| `assertIsRepo()` | Throws if not inside a Git repo |
-| `getStatus()` | Returns structured `GitStatus` object |
-| `stageAll()` | Runs `git add .` |
-| `commit(message)` | Runs `git commit -m "message"` |
-| `getBranchInfo()` | Returns branch name and upstream info |
-| `push(branch)` | Pushes, setting upstream if needed |
-
-This separation matters for Phase 3 (AI): when AI generates a commit message, it calls the same `git.commit()` method. The git layer never changes.
-
----
-
-### `src/utils/logger.ts` — Logger
-
-A thin wrapper over `chalk` that provides consistent terminal output formatting:
-
-```ts
-logger.success('Git repository detected');
-logger.error('Not inside a Git repository');
-logger.fileModified('src/auth.ts');  // prints "  ~ src/auth.ts" in yellow
-logger.section('Modified:');
-```
-
-All visual formatting is centralised here. Commands never call `chalk` directly for structural output.
-
----
-
-### `src/utils/errors.ts` — Custom Errors
-
-Typed error classes that carry a `code` string in addition to a message:
-
-```ts
-throw new NotAGitRepoError();
-// code: 'NOT_A_GIT_REPO'
-
-throw new CommitFailedError('nothing to commit');
-// code: 'COMMIT_FAILED'
-```
-
-This makes error handling explicit and makes it easy to add structured logging or telemetry later.
+The only file that communicates with `simple-git`. All Git operations are methods on this class.
 
 ---
 
@@ -155,43 +92,10 @@ This makes error handling explicit and makes it easy to add structured logging o
 
 ### Why is push a separate command from ship?
 
-Originally, `aigit ship` included push. This was removed because:
-
 1. A developer might want to make multiple commits before pushing.
 2. Push has different failure modes (auth, remote rejection) that are separate concerns.
 3. Keeping them separate makes the workflow explicit and controllable.
 
 ### Why simple-git instead of child_process?
 
-`simple-git` provides a typed, promise-based API for Git. Using raw `child_process.exec` would require parsing raw output, handling encoding, and managing error codes manually — all of which `simple-git` handles.
-
-### Why Commander over yargs?
-
-Commander is simpler for this use case. Each command is a flat, single-level subcommand with minimal flags. Commander's API is cleaner for this shape of CLI.
-
-### Why tsup over tsc?
-
-`tsup` bundles all dependencies into a single `dist/index.js` file. This makes `npm link` and global installs simpler — no `node_modules` traversal needed at runtime. `tsc` alone would not bundle dependencies.
-
----
-
-## Build Pipeline
-
-```
-TypeScript source (src/)
-        |
-        v
-     tsup
-        |
-        v
-  dist/index.js  (bundled CJS, all deps inlined)
-        |
-        v
-  postbuild script adds #!/usr/bin/env node
-        |
-        v
-  npm link / npm install -g
-        |
-        v
-  aigit available system-wide
-```
+`simple-git` provides a typed, promise-based API for Git. Using raw `child_process.exec` would require parsing raw output, handling encoding, and managing error codes manually.

@@ -103,13 +103,3 @@ After reading the working tree, `aigit ship` groups changed files by type:
 | Working tree is clean | Prints a warning and exits cleanly (code 0) |
 | Empty commit message provided via `-m` | Prints error and exits with code 1 |
 | Commit fails (e.g. nothing staged) | Prints the Git error and exits with code 1 |
-
----
-
-## After ship
-
-Once committed, run `aigit push` to send the changes to your remote:
-
-```bash
-aigit push
-```

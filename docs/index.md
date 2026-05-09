@@ -8,7 +8,7 @@ Welcome to the GitPilot documentation. GitPilot is a local Git workflow automati
 
 | Document | Description |
 |----------|-------------|
-| [Commands](./commands/README.md) | All available CLI commands |
+| [Commands Overview](./commands/index.md) | All available CLI commands |
 | [ship](./commands/ship.md) | Stage and commit changes |
 | [push](./commands/push.md) | Push commits to remote |
 | [status](./commands/status.md) | View working-tree status |
@@ -18,19 +18,6 @@ Welcome to the GitPilot documentation. GitPilot is a local Git workflow automati
 ---
 
 ## Quick Start
-
-### Install
-
-```bash
-npm install -g aigit
-```
-
-### Verify
-
-```bash
-aigit --version
-aigit --help
-```
 
 ### Typical Workflow
 

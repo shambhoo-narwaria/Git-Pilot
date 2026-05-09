@@ -19,21 +19,35 @@ When you run `aigit push`, it executes the following steps in order:
 | Step | Action | Git Equivalent |
 |------|--------|----------------|
 | 1 | Verify you are inside a Git repository | `git rev-parse --is-inside-work-tree` |
-| 2 | Detect the current branch name | `git branch --show-current` |
-| 3 | Check whether an upstream is set | `git rev-parse --abbrev-ref --symbolic-full-name @{u}` |
-| 4 | Confirm the push with you | — |
-| 5a | Push (upstream already set) | `git push` |
-| 5b | Push and set upstream (no upstream yet) | `git push --set-upstream origin <branch>` |
+| 2 | Check if remote "origin" exists | `git remote` |
+| 2a | If no remote — prompt for URL and add it | `git remote add origin <url>` |
+| 3 | Detect the current branch name | `git branch --show-current` |
+| 4 | Check whether an upstream is set | `git rev-parse --abbrev-ref --symbolic-full-name @{u}` |
+| 5 | Confirm the push with you | — |
+| 6a | Push (upstream already set) | `git push` |
+| 6b | Push and set upstream (no upstream yet) | `git push --set-upstream origin <branch>` |
 
 ---
 
-## Options
+## Remote Detection
 
-| Flag | Description |
-|------|-------------|
-| `-h, --help` | Show help for this command |
+If no `origin` remote is configured (common with brand new repos), GitPilot catches this before attempting a push and prompts you:
 
-There are no additional flags. The push target is always `origin`.
+```
+Warning: No remote "origin" found
+
+Enter GitHub repo URL: https://github.com/your-username/your-repo.git
+✔ Remote "origin" added -> https://github.com/your-username/your-repo.git
+```
+
+### Accepted URL formats
+
+| Format | Example |
+|--------|---------|
+| HTTPS | `https://github.com/user/repo.git` |
+| SSH | `git@github.com:user/repo.git` |
+
+The URL is validated before the remote is added. Blank or malformed values are rejected and re-prompted.
 
 ---
 
@@ -85,34 +99,6 @@ You never need to type `--set-upstream` manually.
 
 ---
 
-### Cancelling a push
-
-If you answer `No` at the confirmation prompt:
-
-```
-? Continue? No
-Warning: Push cancelled.
-```
-
-The command exits cleanly with code 0. Nothing is pushed.
-
----
-
-## Upstream Detection
-
-GitPilot runs this internally to detect the upstream:
-
-```bash
-git rev-parse --abbrev-ref --symbolic-full-name @{u}
-```
-
-- If it **succeeds** — the branch already tracks a remote branch. GitPilot runs `git push`.
-- If it **fails** — no upstream is set. GitPilot runs `git push --set-upstream origin <current-branch>` automatically.
-
-This is the "magic moment" that removes the most common Git annoyance for developers working on new branches.
-
----
-
 ## Error Handling
 
 | Situation | Behaviour |
@@ -121,20 +107,3 @@ This is the "magic moment" that removes the most common Git annoyance for develo
 | No commits to push | Git will report the error; GitPilot surfaces it and exits with code 1 |
 | Push rejected (e.g. remote has newer commits) | Prints the Git error message and exits with code 1 |
 | User cancels at the confirmation prompt | Exits cleanly with code 0 |
-
----
-
-## Typical Workflow
-
-```bash
-# 1. Make your changes in your editor
-
-# 2. Check what changed
-aigit status
-
-# 3. Stage and commit
-aigit ship
-
-# 4. Push to remote
-aigit push
-```

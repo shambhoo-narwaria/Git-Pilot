@@ -20,9 +20,10 @@ git push origin feature/login --set-upstream
 
 ```bash
 aigit ship
+aigit push
 ```
 
-One command. Full workflow. Done.
+Two simple commands. Full workflow. Done.
 
 ---
 
@@ -63,6 +64,25 @@ aigit ship
 
 # With inline commit message
 aigit ship -m "feat(auth): add login validation"
+```
+
+---
+
+### `aigit push`
+
+Push your committed changes to GitHub/remote automatically.
+
+```
+✔ Detect git repository
+✔ Check if remote exists (prompts to add GitHub URL if missing)
+✔ Detect branch and upstream
+✔ Push to remote (auto-sets upstream if needed)
+```
+
+**Examples:**
+
+```bash
+aigit push
 ```
 
 ---
@@ -108,9 +128,19 @@ git commit -m "feat: add login"
 
 ```bash
 aigit ship
+aigit push
 ```
 
-1 command. Clean, guided UX.
+2 simple, guided commands. No more `--set-upstream` errors or manually setting remotes.
+
+---
+
+## Documentation
+
+Looking for more details? Check out the [`docs/`](./docs/index.md) folder:
+- [Commands Reference](./docs/commands/index.md)
+- [Architecture & Design Decisions](./docs/architecture.md)
+- [Detailed Roadmap](./docs/roadmap.md)
 
 ---
 

@@ -24,14 +24,6 @@ Runs `git status` internally and formats the output into labelled sections group
 
 ---
 
-## Options
-
-| Flag | Description |
-|------|-------------|
-| `-h, --help` | Show help for this command |
-
----
-
 ## Example Output
 
 ```bash
@@ -39,7 +31,6 @@ aigit status
 ```
 
 ```
-
 Modified:
   ~ src/auth.ts
   ~ src/middleware/logger.ts
@@ -56,7 +47,6 @@ Renamed:
 
 Untracked:
   ? notes.txt
-
 ```
 
 ---
@@ -70,20 +60,6 @@ Untracked:
 | `-` | Red | File was deleted |
 | `->` | Blue | File was renamed |
 | `?` | Magenta | File is untracked (new, not staged) |
-
----
-
-## Clean Working Tree
-
-If there are no changes:
-
-```bash
-aigit status
-```
-
-```
-i Working tree clean — nothing to show.
-```
 
 ---
 

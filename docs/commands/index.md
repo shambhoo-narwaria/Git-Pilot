@@ -36,12 +36,3 @@ These options work on all commands:
 |------|-------------|
 | `-v, --version` | Print the current version |
 | `-h, --help` | Show help for any command |
-
-### Examples
-
-```bash
-aigit --version
-aigit --help
-aigit ship --help
-aigit push --help
-```

@@ -127,4 +127,24 @@ export class GitService {
       throw new PushFailedError(err?.message);
     }
   }
+
+  /**
+   * Check whether a named remote (e.g. "origin") exists.
+   */
+  async hasRemote(name: string = DEFAULT_REMOTE): Promise<boolean> {
+    try {
+      const remotes = await this.git.getRemotes(false);
+      return remotes.some((r) => r.name === name);
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Add a remote with the given name and URL.
+   */
+  async addRemote(name: string, url: string): Promise<void> {
+    await this.git.addRemote(name, url);
+  }
 }
+
