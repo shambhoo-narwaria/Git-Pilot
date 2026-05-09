@@ -77,6 +77,7 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
       } else {
         logger.warn('Nothing to ship — working tree is clean.');
       }
+      logger.blank();
       process.exit(0);
     }
 

@@ -75,6 +75,7 @@ program
       } else {
         logger.info('Working tree clean — nothing to show.');
       }
+      logger.blank();
       return;
     }
 

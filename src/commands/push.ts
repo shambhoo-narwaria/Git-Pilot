@@ -132,6 +132,7 @@ export async function push(): Promise<void> {
     } else {
       logger.warn('Everything up-to-date. Nothing to push.');
     }
+    logger.blank();
     process.exit(0);
   }
 
@@ -140,6 +141,7 @@ export async function push(): Promise<void> {
   process.stdout.write('\x1b[1A\x1b[2K');
   if (!confirmed) {
     logger.warn('Push cancelled.');
+    logger.blank();
     process.exit(0);
   }
 
