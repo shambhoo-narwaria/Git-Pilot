@@ -2,7 +2,8 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { ship } from './commands/ship.js';
-import { APP_NAME, APP_VERSION } from './constants/index.js';
+import { push } from './commands/push.js';
+import { APP_VERSION } from './constants/index.js';
 
 const program = new Command();
 
@@ -23,17 +24,24 @@ program
 // ─── ship command ────────────────────────────────────────────────
 program
   .command('ship')
-  .description(
-    'Stage all changes, commit, and push — the full workflow in one command'
-  )
+  .description('Stage all changes and commit locally')
   .option('-m, --message <msg>', 'Commit message (skip the prompt)')
-  .option('--dry-run', 'Stage and commit locally but skip the push')
   .action(async (opts) => {
     try {
-      await ship({
-        message: opts.message,
-        dryRun: opts.dryRun ?? false,
-      });
+      await ship({ message: opts.message });
+    } catch (err: any) {
+      console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
+      process.exit(1);
+    }
+  });
+
+// ─── push command ────────────────────────────────────────────────
+program
+  .command('push')
+  .description('Push committed changes to the remote repository')
+  .action(async () => {
+    try {
+      await push();
     } catch (err: any) {
       console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
       process.exit(1);

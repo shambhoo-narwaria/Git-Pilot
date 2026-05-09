@@ -15,6 +15,4 @@ export interface BranchInfo {
 
 export interface ShipOptions {
   message?: string;
-  noVerify?: boolean;
-  dryRun?: boolean;
 }
