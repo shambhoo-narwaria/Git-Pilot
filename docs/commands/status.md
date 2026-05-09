@@ -47,6 +47,8 @@ Renamed:
 
 Untracked:
   ? notes.txt
+
+ℹ (use "aigit ship" to stage and commit)
 ```
 
 ---
@@ -68,4 +70,5 @@ Untracked:
 | Situation | Behaviour |
 |-----------|-----------|
 | Not inside a Git repo | Prints error and exits with code 1 |
-| Working tree is clean | Prints info message and exits cleanly |
+| Working tree is clean, but unpushed commits exist | Prints `ℹ (use "aigit push" to publish)` and exits |
+| Working tree is clean and synced | Prints `Working tree clean — nothing to show` and exits |

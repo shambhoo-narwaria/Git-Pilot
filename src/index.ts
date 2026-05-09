@@ -58,6 +58,8 @@ program
 
     const git = new GitService();
 
+    logger.header('GitPilot  ·  status');
+
     try {
       await git.assertIsRepo();
     } catch {

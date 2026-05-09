@@ -100,6 +100,6 @@ After reading the working tree, `aigit ship` groups changed files by type:
 | Situation | Behaviour |
 |-----------|-----------|
 | Not inside a Git repo | Prints error and exits with code 1 |
-| Working tree is clean | Prints a warning and exits cleanly (code 0) |
+| Working tree is clean | Prints a warning (and prompts to push if there are unpushed commits) and exits cleanly |
 | Empty commit message provided via `-m` | Prints error and exits with code 1 |
 | Commit fails (e.g. nothing staged) | Prints the Git error and exits with code 1 |
