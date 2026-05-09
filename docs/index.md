@@ -11,6 +11,7 @@ Welcome to the GitPilot documentation. GitPilot is a local Git workflow automati
 | [Commands Overview](./commands/index.md) | All available CLI commands |
 | [ship](./commands/ship.md) | Stage and commit changes |
 | [push](./commands/push.md) | Push commits to remote |
+| [branch](./commands/branch.md) | Switch or create branches |
 | [status](./commands/status.md) | View working-tree status |
 | [Architecture](./architecture.md) | Codebase structure and design decisions |
 | [Roadmap](./roadmap.md) | Phase-by-phase product plan |

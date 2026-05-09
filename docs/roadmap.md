@@ -17,6 +17,7 @@ The core loop. No AI, no cloud. Just solid CLI tooling.
 - Detects current branch and upstream
 - Sets upstream automatically on first push
 - Confirms push before executing
+- Handles branch switching and creation interactively
 
 ---
 

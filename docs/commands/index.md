@@ -1,6 +1,6 @@
 # Commands Overview
 
-GitPilot exposes three commands, each responsible for one stage of the Git workflow.
+GitPilot exposes four core commands, each responsible for one stage of the Git workflow.
 
 ---
 
@@ -10,13 +10,14 @@ GitPilot exposes three commands, each responsible for one stage of the Git workf
 |---------|-------------|
 | [`aigit ship`](./ship.md) | Stage all changes and commit locally |
 | [`aigit push`](./push.md) | Push committed changes to the remote repository |
+| [`aigit branch`](./branch.md) | Switch or create branches interactively |
 | [`aigit status`](./status.md) | Show working-tree status in a clean format |
 
 ---
 
 ## Workflow
 
-The three commands map directly to the developer loop:
+These commands map directly to the developer loop:
 
 ```
 aigit status   ->   see what changed

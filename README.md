@@ -7,13 +7,24 @@
 
 ## The Problem
 
-Every developer repeats this sequence dozens of times a day:
+Every developer repeats these scattered, noisy sequences dozens of times a day:
 
+**1. The "Commit & Push" Chore**
 ```bash
 git add .
 git status
 git commit -m "fix stuff"
-git push origin feature/login --set-upstream
+git push
+# fatal: The current branch feature/login has no upstream branch.
+git push --set-upstream origin feature/login
+```
+
+**2. The "Branch Management" Mess**
+```bash
+git branch -a        # "Wait, what branches do I have?"
+git checkout -b new  # "Let me create a new one"
+git switch main      # "Let me go back"
+# error: Your local changes would be overwritten by checkout...
 ```
 
 ## The Solution
@@ -24,7 +35,7 @@ aigit push
 aigit branch
 ```
 
-Two simple commands. Full workflow. Done.
+Three simple commands. Full workflow. Done.
 
 ---
 
@@ -169,9 +180,14 @@ git switch main      # switch existing
 ```
 **After (1 interactive command):**
 ```bash
-aigit branch
+$ aigit branch
+
+? Select a branch to switch to:
+  master
+❯ feature/login
+  hotfix/typo
 ```
-*(Interactive selection menu, instantly creates new branches, and prevents switching with messy worktrees!)*
+*(Use your arrow keys to quickly switch branches, or use `aigit branch <name>` to instantly create and switch to a new one. Plus, it blocks switches when your worktree is messy!)*
 
 ---
 
