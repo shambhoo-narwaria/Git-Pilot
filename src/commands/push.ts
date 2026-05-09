@@ -82,7 +82,7 @@ export async function push(): Promise<void> {
     const remoteExists = await git.hasRemote(DEFAULT_REMOTE);
 
     if (remoteExists) {
-      spinner.succeed(chalk.green(`Remote "${DEFAULT_REMOTE}" found`));
+      spinner.stop();
     } else {
       spinner.warn(chalk.yellow(`No remote "${DEFAULT_REMOTE}" found`));
       logger.blank();
@@ -113,10 +113,20 @@ export async function push(): Promise<void> {
         )
       );
     } else {
-      spinner.succeed(
-        chalk.green(`Branch: ${chalk.bold(branch.current)} -> ${branch.upstream}`)
-      );
+      spinner.stop();
+      console.log(`  Branch: ${chalk.bold(branch.current)}`);
     }
+  }
+
+  // ── Step 3.5: Check if there's anything to push ─
+  const status = await git.getStatus();
+  if (branch.hasUpstream && status.ahead === 0) {
+    if (status.hasChanges) {
+      logger.warn('You have uncommitted changes. (use "aigit ship" to stage and commit)');
+    } else {
+      logger.warn('Everything up-to-date. Nothing to push.');
+    }
+    process.exit(0);
   }
 
   // ── Step 4: Confirm ───────────────────────────

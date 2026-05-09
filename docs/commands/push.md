@@ -104,6 +104,8 @@ You never need to type `--set-upstream` manually.
 | Situation | Behaviour |
 |-----------|-----------|
 | Not inside a Git repo | Prints error and exits with code 1 |
+| Everything up-to-date | Prints `⚠ Everything up-to-date. Nothing to push.` and exits cleanly |
+| Has uncommitted changes | Prints warning to use `aigit ship` and exits cleanly |
 | No commits to push | Git will report the error; GitPilot surfaces it and exits with code 1 |
 | Push rejected (e.g. remote has newer commits) | Prints the Git error message and exits with code 1 |
 | User cancels at the confirmation prompt | Exits cleanly with code 0 |
