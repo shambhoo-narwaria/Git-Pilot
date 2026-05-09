@@ -21,7 +21,6 @@ git push origin feature/login --set-upstream
 ```bash
 aigit ship
 aigit push
-aigit pull
 aigit branch
 ```
 
@@ -89,17 +88,6 @@ aigit push
 
 ---
 
-### `aigit pull`
-
-Safely pull the latest changes from the remote repository. It checks for uncommitted changes to prevent messy merge conflicts and attempts a fast-forward pull by default.
-
-**Examples:**
-
-```bash
-aigit pull
-```
-
----
 
 ### `aigit branch`
 
@@ -184,17 +172,6 @@ git switch main      # switch existing
 aigit branch
 ```
 *(Interactive selection menu, instantly creates new branches, and prevents switching with messy worktrees!)*
-
-### 4. Pulling
-**Before (Messy merge conflicts):**
-```bash
-git pull origin main --ff-only
-```
-**After (1 safe command):**
-```bash
-aigit pull
-```
-*(Automatically blocks pulls if you have uncommitted changes to protect your work!)*
 
 ---
 

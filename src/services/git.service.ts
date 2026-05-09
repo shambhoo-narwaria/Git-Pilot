@@ -148,16 +148,6 @@ export class GitService {
     await this.git.addRemote(name, url);
   }
 
-  /**
-   * Pull from origin (fast-forward only if possible, to avoid messy merges).
-   */
-  async pull(): Promise<void> {
-    try {
-      await this.git.pull(DEFAULT_REMOTE, undefined, ['--ff-only']);
-    } catch (err: any) {
-      throw new Error(err?.message ?? 'Pull failed. You might have merge conflicts.');
-    }
-  }
 
   /**
    * Get a list of all local branches.

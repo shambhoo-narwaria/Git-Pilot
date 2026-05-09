@@ -3,7 +3,6 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import { ship } from './commands/ship.js';
 import { push } from './commands/push.js';
-import { pull } from './commands/pull.js';
 import { branch } from './commands/branch.js';
 import { APP_VERSION } from './constants/index.js';
 
@@ -44,19 +43,6 @@ program
   .action(async () => {
     try {
       await push();
-    } catch (err: any) {
-      console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
-      process.exit(1);
-    }
-  });
-
-// ─── pull command ────────────────────────────────────────────────
-program
-  .command('pull')
-  .description('Safely pull the latest changes from the remote repository')
-  .action(async () => {
-    try {
-      await pull();
     } catch (err: any) {
       console.error(chalk.red('\n✖ Unexpected error: ') + err.message);
       process.exit(1);
