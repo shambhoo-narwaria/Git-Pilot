@@ -184,7 +184,7 @@ git switch main      # switch existing
 $ aigit branch
 
 ? Select a branch to switch to:
-  master
+  main
 ❯ feature/login
   hotfix/typo
 ```
