@@ -25,6 +25,7 @@ async function promptRemoteUrl(): Promise<string> {
       type: 'input',
       name: 'url',
       message: chalk.cyan('Enter GitHub repo URL:'),
+      prefix: chalk.blue('›'),
       validate: (input: string) => {
         if (!input.trim()) return 'URL cannot be empty';
         if (!isValidRemoteUrl(input.trim()))
@@ -51,6 +52,7 @@ async function promptConfirmPush(branch: BranchInfo): Promise<boolean> {
       type: 'confirm',
       name: 'confirmed',
       message: chalk.cyan('Continue?'),
+      prefix: chalk.blue('›'),
       default: true,
     },
   ]);
@@ -92,7 +94,10 @@ export async function push(): Promise<void> {
       const addSpinner = ora({ text: `Adding remote "${DEFAULT_REMOTE}"…`, color: 'cyan' }).start();
       try {
         await git.addRemote(DEFAULT_REMOTE, url);
-        addSpinner.succeed(chalk.green(`Remote "${DEFAULT_REMOTE}" added → ${url}`));
+        addSpinner.stopAndPersist({
+          symbol: chalk.blue('›'),
+          text: chalk.green(`Remote "${DEFAULT_REMOTE}" added → ${url}`),
+        });
       } catch (err: any) {
         addSpinner.fail(chalk.red(err?.message ?? 'Failed to add remote'));
         process.exit(1);
@@ -144,9 +149,10 @@ export async function push(): Promise<void> {
       const destination = branch.hasUpstream
         ? branch.upstream!
         : `origin/${branch.current}`;
-      spinner.succeed(
-        chalk.green(`Pushed ${chalk.bold(branch.current)} to ${destination}`)
-      );
+      spinner.stopAndPersist({
+        symbol: chalk.blue('›'),
+        text: chalk.green(`Pushed ${chalk.bold(branch.current)} to ${destination}`),
+      });
     } catch (err: any) {
       spinner.fail(chalk.red(err?.message ?? 'Push failed'));
       process.exit(1);

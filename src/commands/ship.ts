@@ -34,6 +34,7 @@ async function promptCommitMessage(prefill?: string): Promise<string> {
       type: 'input',
       name: 'message',
       message: chalk.cyan('Enter commit message:'),
+      prefix: chalk.blue('›'),
       default: prefill,
       validate: (input: string) => {
         if (!input.trim()) return chalk.red('Commit message cannot be empty');
@@ -86,7 +87,10 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
   {
     const spinner = ora({ text: 'Staging changes…', color: 'yellow' }).start();
     await git.stageAll();
-    spinner.succeed(chalk.green('All changes staged'));
+    spinner.stopAndPersist({
+      symbol: chalk.blue('›'),
+      text: chalk.green('All changes staged'),
+    });
   }
 
   // ── Step 4: Commit message ───────────────────
@@ -107,7 +111,10 @@ export async function ship(options: ShipOptions = {}): Promise<void> {
     const spinner = ora({ text: 'Committing…', color: 'green' }).start();
     try {
       await git.commit(commitMessage);
-      spinner.succeed(chalk.green(`Committed: "${commitMessage}"`));
+      spinner.stopAndPersist({
+        symbol: chalk.blue('›'),
+        text: chalk.green(`Committed: "${commitMessage}"`),
+      });
     } catch (err: any) {
       spinner.fail(chalk.red(err?.message ?? 'Commit failed'));
       process.exit(1);
