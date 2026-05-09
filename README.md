@@ -35,7 +35,8 @@ aigit push
 aigit branch
 ```
 
-Three simple commands. Full workflow. Done.
+Three simple commands for your daily workflow. 
+**For everything else? `aigit` works exactly like `git`.** You can completely alias `git` to `aigit` and never look back!
 
 ---
 
@@ -51,7 +52,7 @@ npm install -g aigit
 
 ### `aigit ship`
 
-The flagship command. Runs the full Git workflow:
+The flagship command. Runs the full Git workflow **100% Vim-Free**:
 
 ```
 ✔ Detect git repository
@@ -61,6 +62,7 @@ The flagship command. Runs the full Git workflow:
 ✔ Commit changes locally
 ✔ Changes committed!
 ```
+*(By using a clean, interactive terminal prompt for your commit message, `aigit ship` completely bypasses the dreaded Vim editor that standard `git commit` throws you into!)*
 
 **Options:**
 
@@ -188,6 +190,19 @@ $ aigit branch
   hotfix/typo
 ```
 *(Use your arrow keys to quickly switch branches, or use `aigit branch <name>` to instantly create and switch to a new one. Plus, it blocks switches when your worktree is messy!)*
+
+### 4. Everything Else
+**Before (Switching between custom CLI and Git):**
+```bash
+git log --oneline
+git rebase main
+```
+**After (100% Git Compatible):**
+```bash
+aigit log --oneline
+aigit rebase main
+```
+*(GitPilot seamlessly passes any unknown commands directly to standard Git. You can use it as a complete 1:1 drop-in replacement!)*
 
 ---
 

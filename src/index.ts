@@ -19,7 +19,7 @@ const brand =
 program
   .name('aigit')
   .version(APP_VERSION, '-v, --version', 'Output the current version')
-  .description(brand)
+  .description(brand + chalk.italic('\n  Note: Any unknown command is passed directly to git.\n  You can use aigit as a 100% drop-in replacement!\n'))
   .addHelpText('beforeAll', brand);
 
 // ─── ship command ────────────────────────────────────────────────
@@ -53,7 +53,19 @@ program
 program
   .command('branch [name]')
   .description('Interactive branch switching, or create a new branch')
+  .allowUnknownOption()
   .action(async (name) => {
+    // If the user passes raw git flags (like -D or -a) or multiple args, pass directly to git branch
+    const branchIdx = process.argv.indexOf('branch');
+    const branchArgs = process.argv.slice(branchIdx + 1);
+    const hasFlags = branchArgs.some(a => a.startsWith('-'));
+    
+    if (hasFlags || branchArgs.length > 1) {
+      const { spawnSync } = await import('child_process');
+      const result = spawnSync('git', ['branch', ...branchArgs], { stdio: 'inherit' });
+      process.exit(result.status ?? 1);
+    }
+
     try {
       await branch(name);
     } catch (err: any) {
@@ -117,6 +129,14 @@ program
     logger.info('(use "aigit ship" to stage and commit)');
     logger.blank();
   });
+
+// ─── Pass-through to Git ─────────────────────────────────────────
+program.on('command:*', async () => {
+  const args = process.argv.slice(2);
+  const { spawnSync } = await import('child_process');
+  const result = spawnSync('git', args, { stdio: 'inherit' });
+  process.exit(result.status ?? 1);
+});
 
 // ─── Parse ───────────────────────────────────────────────────────
 program.parse(process.argv);
