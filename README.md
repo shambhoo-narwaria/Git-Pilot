@@ -62,7 +62,7 @@ The flagship command. Runs the full Git workflow **100% Vim-Free**:
 ✔ Commit changes locally
 ✔ Changes committed!
 ```
-*(By using a clean, interactive terminal prompt for your commit message, `aigit ship` completely bypasses the dreaded Vim editor that standard `git commit` throws you into!)*
+*(By using a clean, interactive terminal prompt for your commit message, `aigit ship` completely bypasses the dreaded Vim editor. Plus, once your commit is done, it instantly offers to run `aigit push` for you!)*
 
 **Options:**
 
