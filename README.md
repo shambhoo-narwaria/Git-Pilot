@@ -147,26 +147,54 @@ Untracked:
 
 ## Before vs After
 
-### Before GitPilot
-
+### 1. Shipping Code
+**Before (3 commands, repetitive noise):**
 ```bash
 git add .
 git status
 git commit -m "feat: add login"
 ```
-
-3 commands. Repetitive noise.
-
-### After GitPilot
-
+**After (1 simple command):**
 ```bash
 aigit ship
-aigit push
-aigit pull
-aigit branch
 ```
 
-2 simple, guided commands. No more `--set-upstream` errors or manually setting remotes.
+### 2. Pushing Code
+**Before (Error-prone, manual upstream tracking):**
+```bash
+git push
+# fatal: The current branch feature has no upstream branch.
+git push --set-upstream origin feature
+```
+**After (1 smart command):**
+```bash
+aigit push
+```
+*(Auto-detects branch, auto-sets upstream, stops if up-to-date!)*
+
+### 3. Branching
+**Before (Scattered commands):**
+```bash
+git branch -a        # view branches
+git checkout -b new  # create new
+git switch main      # switch existing
+```
+**After (1 interactive command):**
+```bash
+aigit branch
+```
+*(Interactive selection menu, instantly creates new branches, and prevents switching with messy worktrees!)*
+
+### 4. Pulling
+**Before (Messy merge conflicts):**
+```bash
+git pull origin main --ff-only
+```
+**After (1 safe command):**
+```bash
+aigit pull
+```
+*(Automatically blocks pulls if you have uncommitted changes to protect your work!)*
 
 ---
 
