@@ -57,16 +57,24 @@ export async function branch(branchName?: string): Promise<void> {
       name: 'selectedBranch',
       message: chalk.cyan('Select a branch to switch to:'),
       prefix: chalk.blue('›'),
-      choices: branches.all.map(b => ({
-        name: b === branches.current ? `${b} (current)` : b,
-        value: b,
-        disabled: b === branches.current
-      })),
+      choices: [
+        ...branches.all.map(b => ({
+          name: b === branches.current ? `${b} (current)` : b,
+          value: b,
+          disabled: b === branches.current
+        })),
+        { name: chalk.dim('Cancel / Exit'), value: 'exit' }
+      ],
       pageSize: 10,
     }
   ]);
 
   process.stdout.write('\x1b[1A\x1b[2K'); // Clear the prompt line
+
+  if (selectedBranch === 'exit') {
+    logger.blank();
+    process.exit(0);
+  }
 
   if (selectedBranch && selectedBranch !== branches.current) {
     const spinner = ora({ text: `Switching to ${selectedBranch}…`, color: 'blue' }).start();
